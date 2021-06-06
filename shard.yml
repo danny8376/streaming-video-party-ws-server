@@ -1,0 +1,17 @@
+name: streaming-video-party-ws-server
+version: 0.1.0
+
+authors:
+  - DannyAAM <danny@saru.moe>
+
+targets:
+  ws-server:
+    main: src/ws-server.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+
+crystal: 1.0.0
+
+license: MIT
