@@ -113,5 +113,8 @@ spawn do # timeout checking fiber
   end
 end
 
-Kemal.run
-
+# TODO: move this to config
+Kemal.run do |config|
+  config.server.not_nil!.bind_unix "socket.sock"
+  File.chmod("socket.sock", 0o777)
+end
