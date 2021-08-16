@@ -200,10 +200,10 @@ class Room
           platform, id, offset = args
           if platform.empty? || id.empty?
             @video = nil
-            client_send "video", "", "", 0.0
+            client_streamfix_send "video", "", "", 0.0
           else
             @video = video = Video.new(platform, id, offset.to_f)
-            client_send "video", *video.args
+            client_streamfix_send "video", *video.args
           end
         end
       when "close"
