@@ -55,6 +55,30 @@ post "/room/:id" do |env| # create party room
   "Room #{room_id} created"
 end
 
+delete "/room/:id" do |env| # force close party room
+  room_id = env.params.url["id"]
+  room_key = env.params.body["key"]? || env.request.headers["X-Room-Key"]?
+
+  if room_key.nil? || room_key.not_nil!.empty?
+    halt env, 400, "key (room key) is required"
+  end
+
+  if rooms.has_key?(room_id)
+    if rooms[room_id].key == room_key
+      rooms[room_id].close
+
+      env.response.status_code = 200
+      "Room #{room_id} closed"
+    else
+      env.response.status_code = 403
+      "Room #{room_id} exist, but given key isn't corrent"
+    end
+  else
+    env.response.status_code = 404
+    "room not found"
+  end
+end
+
 ws "/ws/room/:id" do |ws, env| # client
   room_id = env.ws_route_lookup.params["id"]
   room = rooms[room_id]?
