@@ -115,6 +115,10 @@ class Room
     @key = key if persist? # only persist room's key is changable
   end
 
+  def status
+    {!@host.nil?, @clients.size}
+  end
+
   def mark_update
     @last_update = Time.monotonic
   end
@@ -212,7 +216,14 @@ class Room
           end
         end
       when "close"
-        close unless persist?
+        if persist? # clear video and stream for persist room
+          @video = nil
+          client_streamfix_send "video", "", "", 0.0
+          @stream = nil
+          client_send "stream", "", "", 0.0
+        else # otherwise, just close it
+          close
+        end
       end
     else
       if cmd == "auth" && !args.empty? && @key == args.first

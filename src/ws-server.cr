@@ -47,6 +47,51 @@ get "/" do |env|
   "Streaming Video Party WS Server!"
 end
 
+get "/rooms" do |env|
+  unless masterauth?(env, "__LIST__", "get")
+    halt env, 404
+  end
+  env.response.content_type = "application/json"
+  JSON.build do |json|
+    json.object do
+      json.field "rooms" do
+        json.array do
+          rooms.each do |id, room|
+            json.object do
+              json.field "id", room.id
+              json.field "persist", room.persist?
+              has_host, client_count = room.status
+              json.field "has_host", has_host
+              json.field "client_count", client_count
+              room.video.try do |v|
+                json.field "video" do
+                  json.object do
+                    platform, id, offset = v.args
+                    json.field "platform", platform
+                    json.field "id", id
+                    json.field "offset", offset
+                    json.field "paused", room.video_paused?
+                  end
+                end
+              end
+              room.stream.try do |s|
+                json.field "stream" do
+                  json.object do
+                    platform, id, offset = s.args
+                    json.field "platform", platform
+                    json.field "id", id
+                    json.field "offset", offset
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+end
+
 get "/room/:id" do |env| # check room existence
   room_id = env.params.url["id"]
   room_key = env.request.headers["X-Room-Key"]?
