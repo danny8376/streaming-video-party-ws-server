@@ -1,0 +1,20 @@
+bind:
+  host: 127.0.0.1
+  port: 54321
+  # leave unix empty to use tcp, otherwise with unix socket
+  unix:
+  perm: 0o777
+masterauth:
+  # leave passphrase empty to disable master auth
+  # which disable the ability to create persist room,
+  # To enable it, it's required to fill passphrase
+  # (any string, just a challenge key to enable this)
+  # and at least one set of key (in yaml mapping)
+  # (mapping key is "iss" of JWT)
+  # (value is base64 encoded ECDSA 256 bit pub key)
+  passphrase:
+  keys:
+    #key1: |
+    #  -----BEGIN PUBLIC KEY-----
+    #  PASTE YOUR PUBLIC KEY HERE
+    #  -----END PUBLIC KEY-----

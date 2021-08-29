@@ -94,6 +94,7 @@ class Room
 
   getter id # party id
   getter key # host key
+  getter? persist
 
   getter video : Video?
   getter? video_paused : Bool
@@ -103,11 +104,15 @@ class Room
 
   @host : WS?
 
-  def initialize(@id : String, @key : String)
+  def initialize(@id : String, @key : String, @persist = false)
     @clients = [] of WS
     @closed = false
     @last_update = Time.monotonic
     @video_paused = false
+  end
+
+  def update_key(key)
+    @key = key if persist? # only persist room's key is changable
   end
 
   def mark_update
@@ -121,7 +126,7 @@ class Room
     @host.try do |host|
       @host = nil if host.purge?
     end
-    if Time.monotonic - @last_update > 1.hour
+    if !persist? && Time.monotonic - @last_update > 1.hour
       close
     end
   end
@@ -207,7 +212,7 @@ class Room
           end
         end
       when "close"
-        close
+        close unless persist?
       end
     else
       if cmd == "auth" && !args.empty? && @key == args.first

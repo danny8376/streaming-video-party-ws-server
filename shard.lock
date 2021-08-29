@@ -1,8 +1,20 @@
 version: 2.0
 shards:
+  bindata:
+    git: https://github.com/spider-gazelle/bindata.git
+    version: 1.9.1
+
   exception_page:
     git: https://github.com/crystal-loot/exception_page.git
     version: 0.1.5
+
+  jwt:
+    git: https://github.com/danny8376/jwt.git
+    version: 1.5.1+git.commit.14b5f3f09c3fd083ff8ee9f6015c2c01f5885671
+
+  jwt_mapping:
+    git: https://github.com/danny8376/jwt_mapping.git
+    version: 0.1.0+git.commit.e677626cea343695c22c3056a145c55871afcd8f
 
   kemal:
     git: https://github.com/kemalcr/kemal.git
@@ -11,6 +23,10 @@ shards:
   kilt:
     git: https://github.com/jeromegn/kilt.git
     version: 0.4.1
+
+  openssl_ext:
+    git: https://github.com/spider-gazelle/openssl_ext.git
+    version: 2.1.5
 
   radix:
     git: https://github.com/luislavena/radix.git

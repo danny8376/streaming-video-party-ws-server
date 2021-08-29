@@ -11,6 +11,8 @@ targets:
 dependencies:
   kemal:
     github: kemalcr/kemal
+  jwt_mapping:
+    github: danny8376/jwt_mapping
 
 crystal: 1.1.1
 
