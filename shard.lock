@@ -9,12 +9,12 @@ shards:
     version: 0.1.5
 
   jwt:
-    git: https://github.com/danny8376/jwt.git
-    version: 1.5.1+git.commit.14b5f3f09c3fd083ff8ee9f6015c2c01f5885671
+    git: https://github.com/crystal-community/jwt.git
+    version: 1.6.0
 
   jwt_mapping:
     git: https://github.com/danny8376/jwt_mapping.git
-    version: 0.1.0+git.commit.e677626cea343695c22c3056a145c55871afcd8f
+    version: 0.1.0+git.commit.cb1510458c351100daac1e3df9fa39ae0c1cdd83
 
   kemal:
     git: https://github.com/kemalcr/kemal.git
